@@ -1,4 +1,5 @@
 import '../global.css';
+import '../src/theme/nativewind';
 import {
   HankenGrotesk_400Regular,
   HankenGrotesk_500Medium,

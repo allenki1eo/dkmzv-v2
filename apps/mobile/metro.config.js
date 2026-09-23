@@ -12,5 +12,10 @@ config.resolver.nodeModulesPaths = [
   path.resolve(workspaceRoot, 'node_modules'),
 ];
 config.resolver.disableHierarchicalLookup = true;
+config.resolver.unstable_enablePackageExports = true;
+config.resolver.extraNodeModules = {
+  '@ebenezer/tokens': path.resolve(workspaceRoot, 'packages/tokens'),
+  '@ebenezer/shared': path.resolve(workspaceRoot, 'packages/shared'),
+};
 
 module.exports = withNativeWind(config, { input: './global.css' });

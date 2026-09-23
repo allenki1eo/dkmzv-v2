@@ -107,7 +107,7 @@ export const sw = {
     subtitle: 'Jiwe, mwanga, na rangi ya kipindi cha kanisa.',
     tokens: 'Rangi',
     type: 'Herufi',
-    radius: 'Pembetatu za umbo',
+    radius: 'Umbo',
     seasons: 'Kalenda ya liturujia',
     contrast: 'Ulinganifu wa rangi',
     verseSample: 'Hata sasa BWANA ametusaidia.',

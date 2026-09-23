@@ -1,4 +1,4 @@
-import { nativeTheme, type ThemePreference } from '@ebenezer/tokens';
+import { nativeTheme, type ThemePreference } from '@ebenezer/tokens/native';
 import {
   createContext,
   useContext,
