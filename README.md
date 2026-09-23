@@ -42,6 +42,10 @@ That installs a local Android SDK if needed, runs `expo prebuild`, and writes:
 
 `apps/mobile/dist/ebenezer-0.1.0.apk`
 
+Download the current build:
+
+https://github.com/allenki1eo/dkmzv-v2/raw/refs/heads/cursor/phase-1-foundation-567a/apps/mobile/dist/ebenezer-0.1.0.apk
+
 Install on a phone with:
 
 ```bash
