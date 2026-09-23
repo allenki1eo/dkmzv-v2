@@ -52,7 +52,9 @@ Install on a phone with:
 adb install -r apps/mobile/dist/ebenezer-0.2.0.apk
 ```
 
-Or copy the file to the phone and open it. On first install Android will ask to allow apps from this source.
+Or copy the file to the phone and open it. On first install Android will ask to allow apps from this source. This build is signed with the Android debug key so it can be installed for review. A parish release key is still needed before a public store listing.
+
+The parish office web build is `pnpm --filter @ebenezer/admin build`. The member app in a browser is `pnpm --filter @ebenezer/mobile export:web` (`apps/mobile/dist-web`).
 
 Cloud build (needs an Expo login):
 

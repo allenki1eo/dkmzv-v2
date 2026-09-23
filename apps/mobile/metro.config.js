@@ -18,4 +18,17 @@ config.resolver.extraNodeModules = {
   '@ebenezer/shared': path.resolve(workspaceRoot, 'packages/shared'),
 };
 
-module.exports = withNativeWind(config, { input: './global.css' });
+const withWind = withNativeWind(config, { input: './global.css' });
+const previousResolve = withWind.resolver.resolveRequest;
+withWind.resolver.resolveRequest = (context, moduleName, platform) => {
+  if (moduleName === 'query-string') {
+    return {
+      filePath: path.resolve(projectRoot, 'shims/query-string.js'),
+      type: 'sourceFile',
+    };
+  }
+  if (previousResolve) return previousResolve(context, moduleName, platform);
+  return context.resolveRequest(context, moduleName, platform);
+};
+
+module.exports = withWind;

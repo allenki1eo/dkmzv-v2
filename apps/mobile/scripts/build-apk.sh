@@ -37,6 +37,7 @@ ensure_packages() {
 }
 
 cd "$ROOT"
+export CI=1
 install_sdk
 accept_licenses
 ensure_packages

@@ -5,6 +5,7 @@ dist
 !apps/mobile/dist/
 apps/mobile/dist/*
 !apps/mobile/dist/ebenezer-0.2.0.apk
+apps/mobile/dist-web
 .expo
 .expo-shared
 *.db
