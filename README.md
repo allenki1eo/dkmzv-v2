@@ -2,7 +2,7 @@
 
 Swahili-first member app and parish office for KKKT Usharika wa Ebenezer.
 
-Phase 1 is the foundation: monorepo, tokens, both themes, i18n, Drizzle schema + seed, phone OTP, and the two design rooms (`/design` on admin, `/design` on mobile).
+The member app (Nyumbani, mahubiri with audio, jumuiya, sadaka, mimi) and the parish office on the web share one backend. Swahili is the default language. Liturgical season colour appears only on the home band, the active tab, and the live badge.
 
 ## What changed from a generic church template
 
@@ -40,16 +40,16 @@ pnpm apk
 
 That installs a local Android SDK if needed, runs `expo prebuild`, and writes:
 
-`apps/mobile/dist/ebenezer-0.1.0.apk`
+`apps/mobile/dist/ebenezer-0.2.0.apk`
 
-Download the current build:
+Download the current build (versionCode 2):
 
-https://github.com/allenki1eo/dkmzv-v2/raw/refs/heads/cursor/phase-1-foundation-567a/apps/mobile/dist/ebenezer-0.1.0.apk
+https://github.com/allenki1eo/dkmzv-v2/raw/refs/heads/cursor/phase-1-foundation-567a/apps/mobile/dist/ebenezer-0.2.0.apk
 
 Install on a phone with:
 
 ```bash
-adb install apps/mobile/dist/ebenezer-0.1.0.apk
+adb install -r apps/mobile/dist/ebenezer-0.2.0.apk
 ```
 
 Or copy the file to the phone and open it. On first install Android will ask to allow apps from this source.
@@ -62,20 +62,34 @@ pnpm --filter @ebenezer/mobile apk:eas
 
 `eas.json` profiles `preview` and `production` both set `android.buildType` to `apk`. Use `store` only if you later want an AAB for Play Console.
 
-## Run Phase 1
+## Run the web office
 
 ```bash
 pnpm install
 cp .env.example .env
 pnpm db:migrate
 pnpm db:seed
-pnpm dev:admin
+pnpm --filter @ebenezer/admin build
+pnpm --filter @ebenezer/admin start
 ```
 
+- Office: http://localhost:3000/ofisi
+- Door: http://localhost:3000/ingia
 - Design room: http://localhost:3000/design
-- Office door: http://localhost:3000/ingia
+- Parish JSON: http://localhost:3000/api/parish
 - Seed office login: `mchungaji@ebenezer.or.tz` / `JiweLaMsaada2026`
+- Same password for `katibu@`, `mhazini@`, and `media@ebenezer.or.tz`
 - Dev OTP: `255255` for `0712000001`
+
+The office covers the dashboard, waumini, jumuiya, mahubiri (draft and publish), live service, sadaka ledger with CSV, matangazo, liturgical calendar, and parish settings.
+
+## Member app in a browser
+
+```bash
+pnpm --filter @ebenezer/mobile export:web
+```
+
+Static files land in `apps/mobile/dist-web`. On the phone, open the app and choose **Ingia bila mtandao** when the API is not reachable. With `EXPO_PUBLIC_API_URL` set, Nyumbani reads `GET /api/parish`.
 
 ## Token file
 

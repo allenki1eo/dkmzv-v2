@@ -4,7 +4,7 @@ node_modules
 dist
 !apps/mobile/dist/
 apps/mobile/dist/*
-!apps/mobile/dist/ebenezer-0.1.0.apk
+!apps/mobile/dist/ebenezer-0.2.0.apk
 .expo
 .expo-shared
 *.db

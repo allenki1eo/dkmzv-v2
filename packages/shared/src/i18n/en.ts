@@ -52,6 +52,7 @@ export const en: Dictionary = {
     signedOut: 'You have signed out.',
     signOut: 'Sign out',
     devCodeHint: 'Development mode. The sign-in code is {code}.',
+    demoEnter: 'Continue offline',
   },
 
   home: {
@@ -65,6 +66,9 @@ export const en: Dictionary = {
     seeAll: 'See all',
     reminders: 'Today’s reminders',
     emptyAnnouncements: 'No new announcement today.',
+    preacher: 'Preacher',
+    viewers: 'watching',
+    offlineNote: 'You are offline. Showing what we saved.',
   },
 
   sermons: {
@@ -74,6 +78,12 @@ export const en: Dictionary = {
     series: 'Series',
     download: 'Download sermon',
     empty: 'No sermons have been published yet.',
+    play: 'Listen',
+    pause: 'Pause',
+    speed: 'Speed',
+    notes: 'Notes',
+    downloaded: 'Downloaded',
+    mini: 'Playing',
   },
 
   jumuiya: {
@@ -82,6 +92,12 @@ export const en: Dictionary = {
     unknown: 'I do not know my jumuiya',
     empty: 'You have not joined a jumuiya yet. Choose yours.',
     attend: 'I will attend',
+    leader: 'Leader',
+    meets: 'Meeting day',
+    members: 'Members',
+    place: 'Place',
+    requestSent: 'Your request was sent to the secretary.',
+    going: 'You have said you will attend.',
   },
 
   giving: {
@@ -92,6 +108,12 @@ export const en: Dictionary = {
     failed: 'The payment did not finish. Check your M-Pesa balance, then try again.',
     receipt: 'Receipt',
     anonymous: 'Keep my name off public totals',
+    amount: 'Amount',
+    network: 'Network',
+    history: 'History',
+    done: 'The gift was received. Thank you.',
+    receiptNo: 'Receipt number',
+    back: 'Back',
   },
 
   me: {
@@ -102,6 +124,7 @@ export const en: Dictionary = {
     downloads: 'Downloads',
     contactOffice: 'Contact the office',
     design: 'Marks and colour',
+    officePhone: 'Office',
   },
 
   design: {
@@ -142,6 +165,12 @@ export const en: Dictionary = {
     settings: 'Settings',
     design: 'Mark room',
     audit: 'Audit log',
+    thisSunday: 'This Sunday',
+    exportCsv: 'Download CSV',
+    publish: 'Publish',
+    cashEntry: 'Record a cash offering',
+    save: 'Save',
+    viewersNow: 'Watching now',
   },
 
   states: {

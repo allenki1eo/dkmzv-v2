@@ -1,7 +1,6 @@
 import { createTranslator } from '@ebenezer/shared';
 import { auditTheme, seasons, type ColorToken } from '@ebenezer/tokens';
 import { Pressable, ScrollView, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { StoneMark } from '../src/components/StoneMark';
 import { useAppTheme } from '../src/theme/ThemeProvider';
 
@@ -24,7 +23,7 @@ export default function DesignScreen() {
   const contrast = auditTheme(mode);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.bg }}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.bg }}>
       <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 64 }}>
         <StoneMark />
         <Text
@@ -164,6 +163,6 @@ export default function DesignScreen() {
           </Text>
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }

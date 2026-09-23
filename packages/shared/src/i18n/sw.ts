@@ -50,6 +50,7 @@ export const sw = {
     signedOut: 'Umetoka.',
     signOut: 'Toka',
     devCodeHint: 'Mazingira ya majaribio. Namba ya siri ni {code}.',
+    demoEnter: 'Ingia bila mtandao',
   },
 
   home: {
@@ -63,6 +64,9 @@ export const sw = {
     seeAll: 'Ona yote',
     reminders: 'Vikumbusho vya leo',
     emptyAnnouncements: 'Hakuna tangazo jipya leo.',
+    preacher: 'Mhubiri',
+    viewers: 'wanaangalia',
+    offlineNote: 'Huna mtandao. Tunaonyesha ulichotunza.',
   },
 
   sermons: {
@@ -72,6 +76,12 @@ export const sw = {
     series: 'Mfululizo',
     download: 'Pakua hubiri',
     empty: 'Bado hakuna mahubiri yaliyochapishwa.',
+    play: 'Sikiliza',
+    pause: 'Sitisha',
+    speed: 'Kasi',
+    notes: 'Maelezo',
+    downloaded: 'Imepakuliwa',
+    mini: 'Inacheza',
   },
 
   jumuiya: {
@@ -80,6 +90,12 @@ export const sw = {
     unknown: 'Sijui jumuiya yangu',
     empty: 'Bado hujajiunga na jumuiya. Chagua jumuiya yako.',
     attend: 'Nitahudhuria',
+    leader: 'Kiongozi',
+    meets: 'Siku ya kukutana',
+    members: 'Wanakikundi',
+    place: 'Mahali',
+    requestSent: 'Ombi limetumwa kwa Katibu.',
+    going: 'Umeahidi kuhudhuria.',
   },
 
   giving: {
@@ -90,6 +106,12 @@ export const sw = {
     failed: 'Malipo hayakukamilika. Angalia salio la M-Pesa kisha ujaribu tena.',
     receipt: 'Risiti',
     anonymous: 'Toa bila jina kwenye orodha ya umma',
+    amount: 'Kiasi',
+    network: 'Mtandao',
+    history: 'Historia',
+    done: 'Sadaka imepokelewa. Asante.',
+    receiptNo: 'Namba ya risiti',
+    back: 'Rudi',
   },
 
   me: {
@@ -100,6 +122,7 @@ export const sw = {
     downloads: 'Vipakuliwa',
     contactOffice: 'Wasiliana na ofisi',
     design: 'Alama na rangi',
+    officePhone: 'Ofisi',
   },
 
   design: {
@@ -140,6 +163,12 @@ export const sw = {
     settings: 'Mipangilio',
     design: 'Chumba cha alama',
     audit: 'Kumbukumbu',
+    thisSunday: 'Jumapili hii',
+    exportCsv: 'Pakua CSV',
+    publish: 'Chapisha',
+    cashEntry: 'Andika sadaka ya taslimu',
+    save: 'Hifadhi',
+    viewersNow: 'Wanaotazama sasa',
   },
 
   states: {

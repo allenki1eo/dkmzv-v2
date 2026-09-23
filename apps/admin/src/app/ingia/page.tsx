@@ -31,7 +31,7 @@ export default function IngiaPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token }),
     });
-    router.push('/design');
+    router.push('/ofisi');
     router.refresh();
   }
 

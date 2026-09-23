@@ -1,4 +1,6 @@
-import { dark, light, type ColorToken, type ThemeName } from './colors';
+import { dark, light, type ColorToken, type ThemeName, type ThemePreference } from './colors';
+
+export type { ThemePreference };
 import { radius, shadow, spacing, tapTarget } from './shape';
 import { fonts, lineHeights, mobileScale } from './typography';
 

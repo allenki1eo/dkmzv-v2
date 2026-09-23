@@ -1,8 +1,10 @@
-import { officeRoles } from '@ebenezer/shared';
 import { auditTheme, seasons } from '@ebenezer/tokens';
+import { loadParishHome } from './parish-home';
 import { authRouter } from './routers/auth';
+import { givingRouter } from './routers/giving';
 import { liturgyRouter } from './routers/liturgy';
-import { officeProcedure, publicProcedure, router } from './trpc';
+import { officeRouter } from './routers/office';
+import { publicProcedure, router } from './trpc';
 
 export const appRouter = router({
   auth: authRouter,
@@ -16,13 +18,11 @@ export const appRouter = router({
       },
     })),
   }),
-  office: router({
-    ping: officeProcedure(...officeRoles).query(({ ctx }) => ({
-      ok: true,
-      name: ctx.user.displayName,
-      roles: ctx.user.roles,
-    })),
+  parish: router({
+    home: publicProcedure.query(({ ctx }) => loadParishHome(ctx.db)),
   }),
+  giving: givingRouter,
+  office: officeRouter,
 });
 
 export type AppRouter = typeof appRouter;
