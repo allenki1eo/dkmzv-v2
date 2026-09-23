@@ -8,6 +8,7 @@
     "dev": "turbo dev",
     "dev:admin": "turbo dev --filter=@ebenezer/admin",
     "dev:mobile": "turbo dev --filter=@ebenezer/mobile",
+    "apk": "pnpm --filter @ebenezer/mobile apk",
     "build": "turbo build",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",

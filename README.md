@@ -30,6 +30,34 @@ ebenezer/
 └─ pnpm-workspace.yaml
 ```
 
+## Android APK
+
+The member app is built as a **sideloadable APK** (`tz.kkkt.ebenezer`), not an Expo Go project and not a Play Store AAB by default.
+
+```bash
+pnpm apk
+```
+
+That installs a local Android SDK if needed, runs `expo prebuild`, and writes:
+
+`apps/mobile/dist/ebenezer-0.1.0.apk`
+
+Install on a phone with:
+
+```bash
+adb install apps/mobile/dist/ebenezer-0.1.0.apk
+```
+
+Or copy the file to the phone and open it. On first install Android will ask to allow apps from this source.
+
+Cloud build (needs an Expo login):
+
+```bash
+pnpm --filter @ebenezer/mobile apk:eas
+```
+
+`eas.json` profiles `preview` and `production` both set `android.buildType` to `apk`. Use `store` only if you later want an AAB for Play Console.
+
 ## Run Phase 1
 
 ```bash
