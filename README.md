@@ -42,7 +42,13 @@ That installs a local Android SDK if needed, runs `expo prebuild`, and writes:
 
 `apps/mobile/dist/ebenezer-0.2.0.apk`
 
-Download the current build (versionCode 2):
+On a phone, use the release file. The GitHub code page leaves Chrome stuck on “Downloading…” after the bar fills, and the buttons on that sheet start the same download again.
+
+https://github.com/allenki1eo/dkmzv-v2/releases/download/v0.2.0/ebenezer-0.2.0.apk
+
+When the notification says the download is done, tap it and choose Install. If Android asks, allow installs from the browser. On first launch choose **Ingia bila mtandao**.
+
+The same file is also in the repository:
 
 https://github.com/allenki1eo/dkmzv-v2/raw/refs/heads/cursor/phase-1-foundation-567a/apps/mobile/dist/ebenezer-0.2.0.apk
 

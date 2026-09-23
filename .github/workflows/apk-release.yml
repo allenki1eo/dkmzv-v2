@@ -1,0 +1,38 @@
+name: Publish APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - cursor/phase-1-foundation-567a
+    paths:
+      - apps/mobile/dist/ebenezer-0.2.0.apk
+      - .github/workflows/apk-release.yml
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Attach the APK to the v0.2.0 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          notes=$(cat <<'EOF'
+          Sideload build for KKKT Usharika wa Ebenezer.
+
+          Open this file from the phone browser. When the download finishes, tap the notification and choose Install. If Android asks, allow installs from the browser.
+
+          On first launch choose Ingia bila mtandao.
+          EOF
+          )
+          if gh release view v0.2.0 >/dev/null 2>&1; then
+            gh release upload v0.2.0 apps/mobile/dist/ebenezer-0.2.0.apk --clobber
+          else
+            gh release create v0.2.0 apps/mobile/dist/ebenezer-0.2.0.apk \
+              --title "Ebenezer 0.2.0" \
+              --notes "$notes"
+          fi
