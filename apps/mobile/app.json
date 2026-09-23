@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "Ebenezer",
+    "slug": "ebenezer",
+    "scheme": "ebenezer",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "backgroundColor": "#E9E6DF"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "tz.kkkt.ebenezer"
+    },
+    "android": {
+      "package": "tz.kkkt.ebenezer",
+      "adaptiveIcon": {
+        "backgroundColor": "#E9E6DF"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": ["expo-router", "expo-font"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

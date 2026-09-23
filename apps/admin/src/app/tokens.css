@@ -1,0 +1,62 @@
+/* Generated from @ebenezer/tokens — limestone morning / evening stone. */
+:root {
+  --bg: #e9e6df;
+  --surface: #f6f4f0;
+  --ink: #1e1c19;
+  --ink-muted: #5e5950;
+  --line: #cfcac0;
+  --gold: #7a5a12;
+  --season: #4f6b3a;
+  --success: #2f5a38;
+  --danger: #8a3a2c;
+  --gold-leaf: #c4a046;
+  --font-serif: Literata, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
+  --font-sans: 'Hanken Grotesk', 'SF Pro Text', 'Segoe UI', sans-serif;
+  --radius-sheet: 20px;
+  --radius-card: 14px;
+  --radius-control: 10px;
+  --radius-chip: 999px;
+  --shadow-float: 0 10px 28px rgba(30, 28, 25, 0.12);
+  --motion-theme: 200ms;
+}
+
+.dark {
+  --bg: #16171a;
+  --surface: #202226;
+  --ink: #edeae3;
+  --ink-muted: #a39e94;
+  --line: #33363b;
+  --gold: #d4ae4f;
+  --season: #4f6b3a;
+  --success: #8fb896;
+  --danger: #e0a094;
+  --gold-leaf: #d4ae4f;
+  --shadow-float: 0 10px 28px rgba(0, 0, 0, 0.36);
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  transition:
+    background-color var(--motion-theme) ease,
+    color var(--motion-theme) ease,
+    border-color var(--motion-theme) ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body,
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

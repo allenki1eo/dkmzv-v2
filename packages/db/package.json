@@ -1,0 +1,32 @@
+{
+  "name": "@ebenezer/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema/index.ts"
+  },
+  "scripts": {
+    "generate": "drizzle-kit generate",
+    "migrate": "tsx src/migrate.ts",
+    "seed": "tsx src/seed.ts",
+    "studio": "drizzle-kit studio",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ebenezer/shared": "workspace:*",
+    "@libsql/client": "^0.15.15",
+    "drizzle-orm": "^0.44.5",
+    "ulid": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "drizzle-kit": "^0.31.4",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

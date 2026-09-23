@@ -1,0 +1,29 @@
+{
+  "name": "ebenezer",
+  "private": true,
+  "version": "0.1.0",
+  "description": "KKKT Usharika wa Ebenezer — member app and church office",
+  "packageManager": "pnpm@10.33.3",
+  "scripts": {
+    "dev": "turbo dev",
+    "dev:admin": "turbo dev --filter=@ebenezer/admin",
+    "dev:mobile": "turbo dev --filter=@ebenezer/mobile",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "format": "prettier --write .",
+    "db:generate": "pnpm --filter @ebenezer/db generate",
+    "db:migrate": "pnpm --filter @ebenezer/db migrate",
+    "db:seed": "pnpm --filter @ebenezer/db seed",
+    "db:studio": "pnpm --filter @ebenezer/db studio"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "eslint": "^9.36.0",
+    "prettier": "^3.6.2",
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.44.0"
+  }
+}
