@@ -82,6 +82,9 @@ export const sw = {
     notes: 'Maelezo',
     downloaded: 'Imepakuliwa',
     mini: 'Inacheza',
+    stream: 'Tiririsha',
+    liveStream: 'Ibada moja kwa moja',
+    streaming: 'Inatiririka kutoka kanisani',
   },
 
   jumuiya: {
@@ -96,6 +99,9 @@ export const sw = {
     place: 'Mahali',
     requestSent: 'Ombi limetumwa kwa Katibu.',
     going: 'Umeahidi kuhudhuria.',
+    map: 'Ramani ya jumuiya',
+    openMap: 'Fungua ramani',
+    yours: 'Jumuiya yako',
   },
 
   giving: {
@@ -112,6 +118,14 @@ export const sw = {
     done: 'Sadaka imepokelewa. Asante.',
     receiptNo: 'Namba ya risiti',
     back: 'Rudi',
+    daily: 'Sadaka ya kila siku',
+    morning: 'Utukufu wa asubuhi',
+    evening: 'Utukufu wa jioni',
+    bahasha: 'Bahasha ya Jumapili',
+    memberNo: 'Namba ya mwanachama',
+    street: 'Mtaa',
+    inside: 'Ndani ya bahasha',
+    pocketHint: 'Amani, Jengo na Utumishi ndizo bahasha ndogo. Imarisha usharika ni mfuko wa kuimarisha usharika.',
   },
 
   me: {
@@ -123,6 +137,8 @@ export const sw = {
     contactOffice: 'Wasiliana na ofisi',
     design: 'Alama na rangi',
     officePhone: 'Ofisi',
+    notifications: 'Arifa',
+    notificationsBody: 'Asubuhi, jioni, Jumapili, na siku ya jumuiya yako.',
   },
 
   design: {

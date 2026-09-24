@@ -15,6 +15,9 @@ export type MemberSession = {
   jumuiyaId: string | null;
   jumuiyaAsked: boolean;
   lowData: boolean;
+  memberNumber: string;
+  street: string;
+  notify: boolean;
 };
 
 type SessionValue = {
@@ -35,7 +38,14 @@ const demo: MemberSession = {
   jumuiyaId: 'amani',
   jumuiyaAsked: false,
   lowData: false,
+  memberNumber: '100',
+  street: 'Mtaa wa Mbezi',
+  notify: false,
 };
+
+function withMember(raw: Partial<MemberSession>): MemberSession {
+  return { ...demo, ...raw, memberNumber: raw.memberNumber || demo.memberNumber, street: raw.street || demo.street };
+}
 
 export function SessionProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
@@ -44,7 +54,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     AsyncStorage.getItem(KEY)
       .then((raw) => {
-        if (raw) setUser(JSON.parse(raw) as MemberSession);
+        if (raw) setUser(withMember(JSON.parse(raw) as Partial<MemberSession>));
       })
       .finally(() => setReady(true));
   }, []);

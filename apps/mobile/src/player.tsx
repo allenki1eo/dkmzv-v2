@@ -1,17 +1,13 @@
-import { Audio, type AVPlaybackStatus } from 'expo-av';
-import {
-  createContext,
-  useContext,
-  useMemo,
-  useState,
-  type ReactNode,
-} from 'react';
 import type { ParishSermon } from '@ebenezer/shared';
+import { Audio, type AVPlaybackStatus } from 'expo-av';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 
 type PlayerValue = {
   sermon: ParishSermon | null;
   playing: boolean;
   speed: number;
+  position: number;
+  duration: number;
   play: (sermon: ParishSermon) => Promise<void>;
   toggle: () => Promise<void>;
   cycleSpeed: () => Promise<void>;
@@ -26,56 +22,67 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   const [sermon, setSermon] = useState<ParishSermon | null>(null);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
+  const [position, setPosition] = useState(0);
+  const [duration, setDuration] = useState(0);
 
-  const value = useMemo<PlayerValue>(
-    () => ({
-      sermon,
-      playing,
-      speed,
-      play: async (next) => {
-        await Audio.setAudioModeAsync({
-          playsInSilentModeIOS: true,
-          staysActiveInBackground: true,
-          shouldDuckAndroid: true,
-        });
-        if (sound) {
-          await sound.unloadAsync();
-          sound = null;
-        }
-        const created = await Audio.Sound.createAsync(require('../assets/hubiri.wav'), {
-          shouldPlay: true,
-          rate: speed,
-          shouldCorrectPitch: true,
-        });
-        sound = created.sound;
-        sound.setOnPlaybackStatusUpdate((status: AVPlaybackStatus) => {
-          if (!status.isLoaded) return;
-          setPlaying(status.isPlaying);
-        });
-        setSermon(next);
-        setPlaying(true);
-      },
-      toggle: async () => {
-        if (!sound) return;
-        const status = await sound.getStatusAsync();
-        if (!status.isLoaded) return;
-        if (status.isPlaying) await sound.pauseAsync();
-        else await sound.playAsync();
-      },
-      cycleSpeed: async () => {
-        const next = speeds[(speeds.indexOf(speed) + 1) % speeds.length] ?? 1;
-        setSpeed(next);
-        if (sound) await sound.setRateAsync(next, true);
-      },
-    }),
-    [playing, sermon, speed],
+  const play = async (next: ParishSermon) => {
+    await Audio.setAudioModeAsync({
+      playsInSilentModeIOS: true,
+      staysActiveInBackground: true,
+      shouldDuckAndroid: true,
+    });
+    if (sound) {
+      await sound.unloadAsync();
+      sound = null;
+    }
+    const created = await Audio.Sound.createAsync(require('../assets/hubiri.wav'), {
+      shouldPlay: true,
+      rate: speed,
+      shouldCorrectPitch: true,
+      isLooping: false,
+      progressUpdateIntervalMillis: 400,
+    });
+    sound = created.sound;
+    sound.setOnPlaybackStatusUpdate((status: AVPlaybackStatus) => {
+      if (!status.isLoaded) return;
+      setPlaying(status.isPlaying);
+      setPosition(status.positionMillis);
+      setDuration(status.durationMillis ?? 0);
+    });
+    setSermon(next);
+    setPlaying(true);
+  };
+
+  const toggle = async () => {
+    if (!sound) return;
+    const status = await sound.getStatusAsync();
+    if (!status.isLoaded) return;
+    if (status.isPlaying) await sound.pauseAsync();
+    else await sound.playAsync();
+  };
+
+  const cycleSpeed = async () => {
+    const next = speeds[(speeds.indexOf(speed) + 1) % speeds.length] ?? 1;
+    setSpeed(next);
+    if (sound) await sound.setRateAsync(next, true);
+  };
+
+  return (
+    <PlayerContext.Provider value={{ sermon, playing, speed, position, duration, play, toggle, cycleSpeed }}>
+      {children}
+    </PlayerContext.Provider>
   );
-
-  return <PlayerContext.Provider value={value}>{children}</PlayerContext.Provider>;
 }
 
 export function usePlayer() {
   const value = useContext(PlayerContext);
   if (!value) throw new Error('usePlayer outside provider');
   return value;
+}
+
+export function clock(ms: number) {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  const minutes = Math.floor(total / 60);
+  const seconds = total % 60;
+  return `${minutes}:${String(seconds).padStart(2, '0')}`;
 }

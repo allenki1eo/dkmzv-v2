@@ -1,5 +1,5 @@
 import { seasons } from '@ebenezer/tokens';
-import { resolveLiturgicalDay, type ParishHome, type SeasonKey } from '@ebenezer/shared';
+import { jumuiyaPlaces, resolveLiturgicalDay, type ParishHome, type SeasonKey } from '@ebenezer/shared';
 import { and, desc, eq, isNull, sql } from 'drizzle-orm';
 import { schema, type Database } from '@ebenezer/db';
 
@@ -111,14 +111,21 @@ export async function loadParishHome(db: Database): Promise<ParishHome> {
       { id: 'sala', titleSw: 'Sala ya asubuhi', titleEn: 'Morning prayer', time: '06:00' },
       { id: 'jumuiya', titleSw: 'Kikao cha jumuiya', titleEn: 'Jumuiya meeting', time: '16:00' },
     ],
-    jumuiya: jumuiyaRows.map((row) => ({
-      id: row.id,
-      name: row.name,
-      leader: 'Kiongozi',
-      day: row.meetingDay ?? '',
-      place: row.meetingPlace ?? '',
-      members: memberCounts.find((item) => item.jumuiyaId === row.id)?.total ?? 0,
-    })),
+    jumuiya: jumuiyaRows.map((row) => {
+      const place = jumuiyaPlaces[row.name];
+      return {
+        id: row.id,
+        name: row.name,
+        leader: 'Kiongozi',
+        day: row.meetingDay ?? '',
+        place: row.meetingPlace ?? '',
+        members: memberCounts.find((item) => item.jumuiyaId === row.id)?.total ?? 0,
+        street: place?.street,
+        lat: place?.lat,
+        lng: place?.lng,
+        weekday: place?.weekday,
+      };
+    }),
     sermons: sermonRows.map((row) => {
       const parent = series.find((item) => item.id === row.seriesId);
       return {

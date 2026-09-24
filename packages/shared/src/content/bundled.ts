@@ -1,4 +1,33 @@
-import type { ParishHome } from './types';
+import type { ParishHome, ParishJumuiya } from './types';
+
+/** Meeting points already named by the parish, placed on a map of Dar es Salaam. */
+export const jumuiyaPlaces: Record<string, Pick<ParishJumuiya, 'street' | 'lat' | 'lng' | 'weekday'>> = {
+  Amani: { street: 'Mtaa wa Mbezi', lat: -6.7412, lng: 39.1684, weekday: 4 },
+  Upendo: { street: 'Mtaa wa Kanisa', lat: -6.7785, lng: 39.2081, weekday: 5 },
+  Imani: { street: 'Mtaa wa Tegeta', lat: -6.6689, lng: 39.2214, weekday: 3 },
+  Tumaini: { street: 'Mtaa wa Goba', lat: -6.7124, lng: 39.1862, weekday: 6 },
+  Neema: { street: 'Mtaa wa Makongo', lat: -6.7488, lng: 39.2145, weekday: 4 },
+  Mwanga: { street: 'Mtaa wa Kwaya', lat: -6.7792, lng: 39.2094, weekday: 5 },
+};
+
+export function locateJumuiya(item: ParishJumuiya): ParishJumuiya {
+  const known = jumuiyaPlaces[item.name];
+  if (!known) return item;
+  return { ...known, ...item, lat: item.lat ?? known.lat, lng: item.lng ?? known.lng, street: item.street ?? known.street, weekday: item.weekday ?? known.weekday };
+}
+
+/** Three small Sunday envelopes, plus the parish campaign pocket. */
+export const sundayPockets = [
+  { key: 'amani', nameSw: 'Amani', nameEn: 'Peace' },
+  { key: 'jengo', nameSw: 'Jengo', nameEn: 'Building' },
+  { key: 'utumishi', nameSw: 'Utumishi', nameEn: 'Ministry' },
+  { key: 'imarisha', nameSw: 'Imarisha usharika', nameEn: 'Strengthen the parish' },
+] as const;
+
+export const dailyGlory = [
+  { key: 'asubuhi', nameSw: 'Utukufu wa asubuhi', nameEn: 'Morning glory', hour: 6 },
+  { key: 'jioni', nameSw: 'Utukufu wa jioni', nameEn: 'Evening glory', hour: 18 },
+] as const;
 
 /** Saved parish content so the app still opens on a slow or empty network. */
 export const bundledParish: ParishHome = {
@@ -65,12 +94,12 @@ export const bundledParish: ParishHome = {
     { id: 'funga', titleSw: 'Siku ya kufunga', titleEn: 'Fasting day', time: 'Jumatano' },
   ],
   jumuiya: [
-    { id: 'amani', name: 'Amani', leader: 'Neema Mwanga', day: 'Jumatano', place: 'Nyumba ya Mama Neema, Mbezi', members: 7 },
-    { id: 'upendo', name: 'Upendo', leader: 'Amani Kimaro', day: 'Alhamisi', place: 'Ukumbi mdogo, kanisa', members: 7 },
-    { id: 'imani', name: 'Imani', leader: 'Baraka Ngowi', day: 'Jumanne', place: 'Nyumba ya Ndugu Petro, Tegeta', members: 7 },
-    { id: 'tumaini', name: 'Tumaini', leader: 'Rehema Mushi', day: 'Ijumaa', place: 'Shule ya awali, Goba', members: 7 },
-    { id: 'neema', name: 'Neema', leader: 'Yohana Lyimo', day: 'Jumatano', place: 'Nyumba ya Mama Joyce, Makongo', members: 6 },
-    { id: 'mwanga', name: 'Mwanga', leader: 'Maria Swai', day: 'Alhamisi', place: 'Chumba cha kwaya', members: 6 },
+    { id: 'amani', name: 'Amani', leader: 'Neema Mwanga', day: 'Jumatano', place: 'Nyumba ya Mama Neema, Mbezi', members: 7, street: 'Mtaa wa Mbezi', lat: -6.7412, lng: 39.1684, weekday: 4 },
+    { id: 'upendo', name: 'Upendo', leader: 'Amani Kimaro', day: 'Alhamisi', place: 'Ukumbi mdogo, kanisa', members: 7, street: 'Mtaa wa Kanisa', lat: -6.7785, lng: 39.2081, weekday: 5 },
+    { id: 'imani', name: 'Imani', leader: 'Baraka Ngowi', day: 'Jumanne', place: 'Nyumba ya Ndugu Petro, Tegeta', members: 7, street: 'Mtaa wa Tegeta', lat: -6.6689, lng: 39.2214, weekday: 3 },
+    { id: 'tumaini', name: 'Tumaini', leader: 'Rehema Mushi', day: 'Ijumaa', place: 'Shule ya awali, Goba', members: 7, street: 'Mtaa wa Goba', lat: -6.7124, lng: 39.1862, weekday: 6 },
+    { id: 'neema', name: 'Neema', leader: 'Yohana Lyimo', day: 'Jumatano', place: 'Nyumba ya Mama Joyce, Makongo', members: 6, street: 'Mtaa wa Makongo', lat: -6.7488, lng: 39.2145, weekday: 4 },
+    { id: 'mwanga', name: 'Mwanga', leader: 'Maria Swai', day: 'Alhamisi', place: 'Chumba cha kwaya', members: 6, street: 'Mtaa wa Kwaya', lat: -6.7792, lng: 39.2094, weekday: 5 },
   ],
   sermons: [
     ['Jiwe lililosimama', 'The stone that was set up', '1 Samweli 7:12', 'Jiwe la msaada'],

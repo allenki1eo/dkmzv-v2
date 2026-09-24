@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, Share, Text, View } from 'react-native';
 import { useSession } from '../../src/session';
 import { useAppTheme } from '../../src/theme/ThemeProvider';
+import { Screen } from '../../src/ui';
 
 const api = process.env.EXPO_PUBLIC_API_URL;
 
@@ -25,7 +26,7 @@ export default function Nyumbani() {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.bg }}>
+    <Screen>
       <View style={{ backgroundColor: home.season.hex, paddingHorizontal: 20, paddingVertical: 12 }}>
         <Text style={{ color: '#F6F4F0', fontFamily: 'HankenGrotesk_500Medium', fontSize: 15 }}>
           {en ? home.season.en : home.season.sw}
@@ -136,6 +137,6 @@ export default function Nyumbani() {
           </View>
         ))}
       </ScrollView>
-    </View>
+    </Screen>
   );
 }

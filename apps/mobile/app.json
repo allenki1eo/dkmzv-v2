@@ -3,7 +3,7 @@
     "name": "Ebenezer",
     "slug": "ebenezer",
     "scheme": "ebenezer",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "icon": "./assets/icon.png",
@@ -18,20 +18,29 @@
     },
     "android": {
       "package": "tz.kkkt.ebenezer",
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#E9E6DF"
       },
       "softwareKeyboardLayoutMode": "resize",
-      "permissions": ["INTERNET", "VIBRATE"]
+      "permissions": ["INTERNET", "VIBRATE", "POST_NOTIFICATIONS"]
     },
     "web": {
       "bundler": "metro",
       "output": "single",
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-router", "expo-font"],
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-notifications",
+        {
+          "color": "#7A5A12"
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true
     }

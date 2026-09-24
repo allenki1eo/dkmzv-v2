@@ -9,6 +9,7 @@ import { useFonts } from 'expo-font';
 import { Redirect, Stack, usePathname } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { Platform } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { DownloadsProvider } from '../src/downloads';
 import { PlayerProvider } from '../src/player';
@@ -50,6 +51,20 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) SplashScreen.hideAsync().catch(() => undefined);
   }, [loaded]);
+
+  useEffect(() => {
+    if (Platform.OS === 'web') return;
+    void import('expo-notifications').then((Notifications) => {
+      Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+          shouldShowBanner: true,
+          shouldShowList: true,
+          shouldPlaySound: true,
+          shouldSetBadge: false,
+        }),
+      });
+    });
+  }, []);
 
   if (!loaded) return null;
 

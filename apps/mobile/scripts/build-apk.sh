@@ -55,7 +55,7 @@ if [[ -z "${APK}" ]]; then
   exit 1
 fi
 
-DEST="$ROOT/dist/ebenezer-0.2.0.apk"
+DEST="$ROOT/dist/ebenezer-0.3.0.apk"
 cp "$APK" "$DEST"
 echo "APK ready: $DEST"
 ls -lh "$DEST"

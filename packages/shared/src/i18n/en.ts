@@ -84,6 +84,9 @@ export const en: Dictionary = {
     notes: 'Notes',
     downloaded: 'Downloaded',
     mini: 'Playing',
+    stream: 'Stream',
+    liveStream: 'Live service',
+    streaming: 'Streaming from the church',
   },
 
   jumuiya: {
@@ -98,6 +101,9 @@ export const en: Dictionary = {
     place: 'Place',
     requestSent: 'Your request was sent to the secretary.',
     going: 'You have said you will attend.',
+    map: 'Jumuiya map',
+    openMap: 'Open map',
+    yours: 'Your jumuiya',
   },
 
   giving: {
@@ -114,6 +120,14 @@ export const en: Dictionary = {
     done: 'The gift was received. Thank you.',
     receiptNo: 'Receipt number',
     back: 'Back',
+    daily: 'Daily offering',
+    morning: 'Morning glory',
+    evening: 'Evening glory',
+    bahasha: 'Sunday envelope',
+    memberNo: 'Member number',
+    street: 'Street',
+    inside: 'Inside the envelope',
+    pocketHint: 'Peace, Building, and Ministry are the small envelopes. Strengthen the parish is the parish fund.',
   },
 
   me: {
@@ -125,6 +139,8 @@ export const en: Dictionary = {
     contactOffice: 'Contact the office',
     design: 'Marks and colour',
     officePhone: 'Office',
+    notifications: 'Notifications',
+    notificationsBody: 'Morning, evening, Sunday, and your jumuiya day.',
   },
 
   design: {

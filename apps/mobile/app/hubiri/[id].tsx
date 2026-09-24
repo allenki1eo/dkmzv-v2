@@ -2,24 +2,28 @@ import { bundledParish, createTranslator } from '@ebenezer/shared';
 import { useLocalSearchParams } from 'expo-router';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useDownloads } from '../../src/downloads';
-import { usePlayer } from '../../src/player';
+import { clock, usePlayer } from '../../src/player';
 import { useSession } from '../../src/session';
 import { useAppTheme } from '../../src/theme/ThemeProvider';
+import { BackHeader, Screen } from '../../src/ui';
 
 export default function Hubiri() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const sermon = bundledParish.sermons.find((item) => item.id === id) ?? bundledParish.sermons[0];
   const { theme } = useAppTheme();
   const { user } = useSession();
-  const { play, sermon: current, playing, toggle, cycleSpeed, speed } = usePlayer();
+  const { play, sermon: current, playing, toggle, cycleSpeed, speed, position, duration } = usePlayer();
   const downloads = useDownloads();
   const t = createTranslator(user?.locale ?? 'sw');
   const en = user?.locale === 'en';
   if (!sermon) return null;
   const active = current?.id === sermon.id;
 
+  const progress = duration > 0 ? Math.min(1, position / duration) : 0;
+
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.bg }}>
+    <Screen>
+      <BackHeader title={t('sermons.stream')} />
       <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 40 }}>
         <View
           style={{
@@ -39,6 +43,13 @@ export default function Hubiri() {
             </Text>
           </Pressable>
         </View>
+        <Text style={{ marginTop: 14, color: theme.colors.inkMuted }}>{t('sermons.streaming')}</Text>
+        <View style={{ marginTop: 10, height: 4, borderRadius: 999, backgroundColor: theme.colors.line }}>
+          <View style={{ width: `${Math.round(progress * 100)}%`, height: 4, borderRadius: 999, backgroundColor: theme.colors.gold }} />
+        </View>
+        <Text style={{ marginTop: 6, color: theme.colors.inkMuted }}>
+          {clock(active ? position : 0)} / {clock(active ? duration : sermon.minutes * 60 * 1000)}
+        </Text>
         <Text style={{ marginTop: 20, fontFamily: 'Literata_600SemiBold', fontSize: 32, lineHeight: 40, color: theme.colors.ink }}>
           {en ? sermon.titleEn : sermon.titleSw}
         </Text>
@@ -80,6 +91,6 @@ export default function Hubiri() {
           </Pressable>
         </View>
       </ScrollView>
-    </View>
+    </Screen>
   );
 }

@@ -40,22 +40,22 @@ pnpm apk
 
 That installs a local Android SDK if needed, runs `expo prebuild`, and writes:
 
-`apps/mobile/dist/ebenezer-0.2.0.apk`
+`apps/mobile/dist/ebenezer-0.3.0.apk`
 
 On a phone, use the release file. The GitHub code page leaves Chrome stuck on “Downloading…” after the bar fills, and the buttons on that sheet start the same download again.
 
-https://github.com/allenki1eo/dkmzv-v2/releases/download/v0.2.0/ebenezer-0.2.0.apk
+https://github.com/allenki1eo/dkmzv-v2/releases/download/v0.3.0/ebenezer-0.3.0.apk
 
 When the notification says the download is done, tap it and choose Install. If Android asks, allow installs from the browser. On first launch choose **Ingia bila mtandao**.
 
 The same file is also in the repository:
 
-https://github.com/allenki1eo/dkmzv-v2/raw/refs/heads/cursor/phase-1-foundation-567a/apps/mobile/dist/ebenezer-0.2.0.apk
+https://github.com/allenki1eo/dkmzv-v2/raw/refs/heads/cursor/phase-1-foundation-567a/apps/mobile/dist/ebenezer-0.3.0.apk
 
 Install on a phone with:
 
 ```bash
-adb install -r apps/mobile/dist/ebenezer-0.2.0.apk
+adb install -r apps/mobile/dist/ebenezer-0.3.0.apk
 ```
 
 Or copy the file to the phone and open it. On first install Android will ask to allow apps from this source. This build is signed with the Android debug key so it can be installed for review. A parish release key is still needed before a public store listing.

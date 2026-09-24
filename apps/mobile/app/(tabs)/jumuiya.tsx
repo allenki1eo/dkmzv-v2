@@ -1,8 +1,10 @@
-import { bundledParish, createTranslator } from '@ebenezer/shared';
+import { bundledParish, createTranslator, locateJumuiya } from '@ebenezer/shared';
 import { useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Linking, Pressable, ScrollView, Text, View } from 'react-native';
+import { JumuiyaMap } from '../../src/map';
 import { useSession } from '../../src/session';
 import { useAppTheme } from '../../src/theme/ThemeProvider';
+import { Screen } from '../../src/ui';
 
 export default function JumuiyaScreen() {
   const { theme } = useAppTheme();
@@ -10,76 +12,110 @@ export default function JumuiyaScreen() {
   const t = createTranslator(user?.locale ?? 'sw');
   const [going, setGoing] = useState(false);
   const [asked, setAsked] = useState(user?.jumuiyaAsked ?? false);
-  const mine = bundledParish.jumuiya.find((item) => item.id === user?.jumuiyaId) ?? null;
+  const places = bundledParish.jumuiya.map(locateJumuiya);
+  const [selectedId, setSelectedId] = useState<string | null>(user?.jumuiyaId ?? places[0]?.id ?? null);
+  const selected = places.find((item) => item.id === selectedId) ?? places[0] ?? null;
+  const mine = places.find((item) => item.id === user?.jumuiyaId) ?? null;
+
+  function openMaps(lat?: number, lng?: number) {
+    if (lat == null || lng == null) return;
+    void Linking.openURL(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`);
+  }
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.bg }}>
-      <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 32 }}>
-        <Text style={{ fontFamily: 'Literata_600SemiBold', fontSize: 32, color: theme.colors.ink }}>
-          {t('jumuiya.title')}
-        </Text>
-        {mine ? (
-          <View style={{ marginTop: 20 }}>
-            <Text style={{ fontFamily: 'Literata_600SemiBold', fontSize: 28, color: theme.colors.ink }}>{mine.name}</Text>
-            <Text style={{ marginTop: 12, color: theme.colors.ink }}>
-              {t('jumuiya.leader')}
-              <Text style={{ color: theme.colors.inkMuted }}>{`\n${mine.leader}`}</Text>
+    <Screen>
+      <ScrollView contentContainerStyle={{ paddingBottom: 32 }}>
+        <View style={{ paddingHorizontal: 20, paddingTop: 12 }}>
+          <Text style={{ fontFamily: 'Literata_600SemiBold', fontSize: 32, color: theme.colors.ink }}>{t('jumuiya.title')}</Text>
+          <Text style={{ marginTop: 6, color: theme.colors.inkMuted }}>{t('jumuiya.map')}</Text>
+        </View>
+        <View
+          style={{
+            marginTop: 16,
+            marginHorizontal: 20,
+            borderRadius: theme.radius.card,
+            overflow: 'hidden',
+            borderWidth: 1,
+            borderColor: theme.colors.line,
+            height: 280,
+          }}
+        >
+          <JumuiyaMap
+            points={places}
+            selectedId={selected?.id ?? null}
+            gold={theme.colors.gold}
+            ink={theme.colors.ink}
+            onSelect={setSelectedId}
+          />
+        </View>
+
+        {selected ? (
+          <View style={{ marginHorizontal: 20, marginTop: 16 }}>
+            <Text style={{ fontFamily: 'Literata_600SemiBold', fontSize: 28, color: theme.colors.ink }}>{selected.name}</Text>
+            {selected.id === mine?.id ? (
+              <Text style={{ marginTop: 4, color: theme.colors.gold }}>{t('jumuiya.yours')}</Text>
+            ) : null}
+            <Text style={{ marginTop: 12, fontSize: 17, color: theme.colors.ink }}>{selected.place}</Text>
+            <Text style={{ marginTop: 4, color: theme.colors.inkMuted }}>
+              {selected.street} · {selected.day}
             </Text>
-            <Text style={{ marginTop: 12, color: theme.colors.ink }}>
-              {t('jumuiya.meets')}
-              <Text style={{ color: theme.colors.inkMuted }}>{`\n${mine.day}`}</Text>
-            </Text>
-            <Text style={{ marginTop: 12, color: theme.colors.ink }}>
-              {t('jumuiya.place')}
-              <Text style={{ color: theme.colors.inkMuted }}>{`\n${mine.place}`}</Text>
-            </Text>
-            <Text style={{ marginTop: 12, color: theme.colors.inkMuted }}>
-              {mine.members} {t('jumuiya.members')}
+            <Text style={{ marginTop: 4, color: theme.colors.inkMuted }}>
+              {t('jumuiya.leader')}: {selected.leader}
             </Text>
             <Pressable
-              onPress={() => setGoing(true)}
+              onPress={() => openMaps(selected.lat, selected.lng)}
               style={{
-                marginTop: 20,
-                minHeight: 48,
+                marginTop: 16,
+                minHeight: 52,
                 borderRadius: theme.radius.control,
                 backgroundColor: theme.colors.gold,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <Text style={{ color: theme.colors.surface, fontSize: 17 }}>
-                {going ? t('jumuiya.going') : t('jumuiya.attend')}
-              </Text>
+              <Text style={{ color: theme.colors.surface, fontSize: 17 }}>{t('jumuiya.openMap')}</Text>
             </Pressable>
+            {selected.id === mine?.id ? (
+              <Pressable onPress={() => setGoing(true)} style={{ minHeight: 48, justifyContent: 'center' }}>
+                <Text style={{ color: theme.colors.ink, fontSize: 17 }}>{going ? t('jumuiya.going') : t('jumuiya.attend')}</Text>
+              </Pressable>
+            ) : (
+              <Pressable onPress={() => void update({ jumuiyaId: selected.id, street: selected.street ?? user?.street })} style={{ minHeight: 48, justifyContent: 'center' }}>
+                <Text style={{ color: theme.colors.ink, fontSize: 17 }}>{t('jumuiya.pick')}</Text>
+              </Pressable>
+            )}
           </View>
-        ) : (
-          <Text style={{ marginTop: 16, fontSize: 17, lineHeight: 26, color: theme.colors.ink }}>{t('jumuiya.empty')}</Text>
-        )}
+        ) : null}
 
-        <Text style={{ marginTop: 28, fontFamily: 'Literata_600SemiBold', fontSize: 22, color: theme.colors.ink }}>
-          {t('jumuiya.pick')}
-        </Text>
-        {bundledParish.jumuiya.map((item) => (
+        <View style={{ marginTop: 12 }}>
+          {places.map((item) => (
+            <Pressable
+              key={item.id}
+              onPress={() => setSelectedId(item.id)}
+              style={{
+                minHeight: 64,
+                justifyContent: 'center',
+                paddingHorizontal: 20,
+                borderTopWidth: 1,
+                borderTopColor: theme.colors.line,
+                backgroundColor: item.id === selected?.id ? theme.colors.surface : theme.colors.bg,
+              }}
+            >
+              <Text style={{ fontSize: 17, color: theme.colors.ink }}>{item.name}</Text>
+              <Text style={{ color: theme.colors.inkMuted }}>{item.place}</Text>
+            </Pressable>
+          ))}
           <Pressable
-            key={item.id}
-            onPress={() => void update({ jumuiyaId: item.id })}
-            style={{ minHeight: 48, justifyContent: 'center', borderTopWidth: 1, borderTopColor: theme.colors.line }}
+            onPress={() => {
+              setAsked(true);
+              void update({ jumuiyaId: null, jumuiyaAsked: true });
+            }}
+            style={{ minHeight: 52, justifyContent: 'center', paddingHorizontal: 20 }}
           >
-            <Text style={{ fontSize: 17, color: item.id === mine?.id ? theme.colors.gold : theme.colors.ink }}>
-              {item.name}
-            </Text>
+            <Text style={{ color: theme.colors.inkMuted }}>{asked ? t('jumuiya.requestSent') : t('jumuiya.unknown')}</Text>
           </Pressable>
-        ))}
-        <Pressable
-          onPress={() => {
-            setAsked(true);
-            void update({ jumuiyaId: null, jumuiyaAsked: true });
-          }}
-          style={{ minHeight: 48, justifyContent: 'center' }}
-        >
-          <Text style={{ color: theme.colors.inkMuted }}>{asked ? t('jumuiya.requestSent') : t('jumuiya.unknown')}</Text>
-        </Pressable>
+        </View>
       </ScrollView>
-    </View>
+    </Screen>
   );
 }

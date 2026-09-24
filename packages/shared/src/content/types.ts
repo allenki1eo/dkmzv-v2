@@ -19,6 +19,11 @@ export type ParishJumuiya = {
   day: string;
   place: string;
   members: number;
+  street?: string;
+  lat?: number;
+  lng?: number;
+  /** Expo weekday: 1 is Sunday. */
+  weekday?: number;
 };
 
 export type ParishHome = {

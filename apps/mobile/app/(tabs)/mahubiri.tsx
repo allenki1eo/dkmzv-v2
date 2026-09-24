@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { useSession } from '../../src/session';
 import { useAppTheme } from '../../src/theme/ThemeProvider';
+import { Screen } from '../../src/ui';
 
 const filters = ['audio', 'series'] as const;
 
@@ -22,11 +23,30 @@ export default function Mahubiri() {
   });
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.bg }}>
+    <Screen>
       <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 32 }}>
         <Text style={{ fontFamily: 'Literata_600SemiBold', fontSize: 32, color: theme.colors.ink }}>
           {t('sermons.title')}
         </Text>
+        {bundledParish.live ? (
+          <Link href="/ibada" asChild>
+            <Pressable
+              style={{
+                marginTop: 16,
+                minHeight: 72,
+                borderRadius: theme.radius.card,
+                backgroundColor: theme.colors.ink,
+                padding: 16,
+                justifyContent: 'center',
+              }}
+            >
+              <Text style={{ color: bundledParish.season.hex }}>{t('sermons.liveStream')}</Text>
+              <Text style={{ color: theme.colors.bg, fontFamily: 'Literata_600SemiBold', fontSize: 20, marginTop: 4 }}>
+                {en ? bundledParish.live.titleEn : bundledParish.live.titleSw}
+              </Text>
+            </Pressable>
+          </Link>
+        ) : null}
         <TextInput
           value={query}
           onChangeText={setQuery}
@@ -79,6 +99,6 @@ export default function Mahubiri() {
           ))
         )}
       </ScrollView>
-    </View>
+    </Screen>
   );
 }

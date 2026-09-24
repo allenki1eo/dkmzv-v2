@@ -1,9 +1,11 @@
-import { createTranslator } from '@ebenezer/shared';
+import { bundledParish, createTranslator, locateJumuiya } from '@ebenezer/shared';
 import { Link } from 'expo-router';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useDownloads } from '../../src/downloads';
+import { syncReminders } from '../../src/reminders';
 import { useSession } from '../../src/session';
 import { useAppTheme } from '../../src/theme/ThemeProvider';
+import { Screen } from '../../src/ui';
 
 export default function Mimi() {
   const { theme, preference, setPreference } = useAppTheme();
@@ -11,11 +13,17 @@ export default function Mimi() {
   const downloads = useDownloads();
   const t = createTranslator(user?.locale ?? 'sw');
 
+  const mine = bundledParish.jumuiya.map(locateJumuiya).find((item) => item.id === user?.jumuiyaId) ?? null;
+
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.bg }}>
+    <Screen>
       <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 40 }}>
         <Text style={{ fontFamily: 'Literata_600SemiBold', fontSize: 32, color: theme.colors.ink }}>{user?.name}</Text>
         <Text style={{ marginTop: 4, color: theme.colors.inkMuted }}>{user?.phone}</Text>
+        <Text style={{ marginTop: 4, color: theme.colors.ink }}>
+          {t('giving.memberNo')} {user?.memberNumber}
+        </Text>
+        <Text style={{ color: theme.colors.inkMuted }}>{user?.street}</Text>
 
         <Text style={{ marginTop: 28, color: theme.colors.inkMuted }}>{t('me.language')}</Text>
         <View style={{ flexDirection: 'row', gap: 8, marginTop: 8 }}>
@@ -59,7 +67,20 @@ export default function Mimi() {
           ))}
         </View>
 
-        <Pressable onPress={() => void update({ lowData: !user?.lowData })} style={{ minHeight: 48, justifyContent: 'center', marginTop: 16 }}>
+        <Pressable
+          onPress={() => {
+            const next = !user?.notify;
+            void syncReminders(next, mine).then((ok) => update({ notify: next ? ok : false }));
+          }}
+          style={{ minHeight: 64, justifyContent: 'center', marginTop: 16 }}
+        >
+          <Text style={{ fontSize: 17, color: theme.colors.ink }}>
+            {t('me.notifications')}: {user?.notify ? 'imewashwa' : 'imezimwa'}
+          </Text>
+          <Text style={{ color: theme.colors.inkMuted }}>{t('me.notificationsBody')}</Text>
+        </Pressable>
+
+        <Pressable onPress={() => void update({ lowData: !user?.lowData })} style={{ minHeight: 48, justifyContent: 'center', marginTop: 8 }}>
           <Text style={{ fontSize: 17, color: theme.colors.ink }}>
             {t('me.lowData')}: {user?.lowData ? 'imewashwa' : 'imezimwa'}
           </Text>
@@ -84,6 +105,6 @@ export default function Mimi() {
           <Text style={{ color: theme.colors.danger, fontSize: 17 }}>{t('auth.signOut')}</Text>
         </Pressable>
       </ScrollView>
-    </View>
+    </Screen>
   );
 }
